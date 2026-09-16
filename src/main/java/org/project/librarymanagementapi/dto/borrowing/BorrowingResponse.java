@@ -1,6 +1,7 @@
 package org.project.librarymanagementapi.dto.borrowing;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class BorrowingResponse {
     private Long id;
@@ -8,10 +9,10 @@ public class BorrowingResponse {
     private String bookTitle;
     private Long memberId;
     private String memberName;
-    private LocalDate borrowedAt;
-    private LocalDate returnedAt;
+    private LocalDateTime borrowedAt;
+    private LocalDateTime returnedAt;
 
-    public BorrowingResponse(Long id, Long bookCopyId, String bookTitle, Long memberId, String memberName, LocalDate borrowedAt, LocalDate returnedAt) {
+    public BorrowingResponse(Long id, Long bookCopyId, String bookTitle, Long memberId, String memberName, LocalDateTime borrowedAt, LocalDateTime returnedAt) {
         this.id = id;
         this.bookCopyId = bookCopyId;
         this.bookTitle = bookTitle;
@@ -41,11 +42,11 @@ public class BorrowingResponse {
         return memberName;
     }
 
-    public LocalDate getBorrowedAt() {
+    public LocalDateTime getBorrowedAt() {
         return borrowedAt;
     }
 
-    public LocalDate getReturnedAt() {
+    public LocalDateTime getReturnedAt() {
         return returnedAt;
     }
 }
