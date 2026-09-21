@@ -6,6 +6,9 @@ import org.project.librarymanagementapi.dto.author.AuthorResponse;
 import org.project.librarymanagementapi.entities.Author;
 import org.project.librarymanagementapi.exceptions.ResourceNotFoundException;
 import org.project.librarymanagementapi.repositories.AuthorRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,11 +32,14 @@ public class AuthorService {
     }
 
     @Transactional(readOnly = true)
-    public List<AuthorResponse> getAll() {
+    public Page<AuthorResponse> getAll(int page, int size, String name) {
 
-        List<Author> authors = authorRepository.findAll();
+        Pageable pageable = PageRequest.of(page - 1, size);
 
-        return authors.stream().map(this::toResponse).toList();
+        Page<Author> authors = authorRepository.searchByNameContainingIgnoreCase(
+                name.trim(), pageable);
+
+        return authors.map(this::toResponse);
     }
 
     @Transactional(readOnly = true)

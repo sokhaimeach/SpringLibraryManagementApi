@@ -5,6 +5,7 @@ import org.project.librarymanagementapi.dto.ApiResponse;
 import org.project.librarymanagementapi.dto.author.AuthorRequest;
 import org.project.librarymanagementapi.dto.author.AuthorResponse;
 import org.project.librarymanagementapi.services.AuthorService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +22,15 @@ public class AuthorController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<AuthorResponse>>> getAllAuthors() {
+    public ResponseEntity<ApiResponse<Page<AuthorResponse>>> getAllAuthors(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "") String name
+    ) {
         return ResponseEntity.ok(
                 new ApiResponse<>(
                         "Authors fetched successfully",
-                        authorService.getAll()
+                        authorService.getAll(page, size, name)
                 )
         );
     }

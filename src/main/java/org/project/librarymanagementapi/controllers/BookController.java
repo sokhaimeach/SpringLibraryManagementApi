@@ -5,6 +5,7 @@ import org.project.librarymanagementapi.dto.ApiResponse;
 import org.project.librarymanagementapi.dto.book.BookRequest;
 import org.project.librarymanagementapi.dto.book.BookResponse;
 import org.project.librarymanagementapi.services.BookService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +21,14 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<BookResponse>>> getBooks() {
+    public ResponseEntity<ApiResponse<Page<BookResponse>>> getBooks(
+            @RequestParam(required = false, defaultValue = "") String title,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
         return ResponseEntity.ok(new ApiResponse<>(
                 "Books fetched successfully",
-                bookService.findAll()
+                bookService.findAll(title, page, size)
         ));
     }
 

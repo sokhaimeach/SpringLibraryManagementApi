@@ -8,6 +8,10 @@ import org.project.librarymanagementapi.entities.Book;
 import org.project.librarymanagementapi.exceptions.ResourceNotFoundException;
 import org.project.librarymanagementapi.repositories.AuthorRepository;
 import org.project.librarymanagementapi.repositories.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,9 +52,13 @@ public class BookService {
     }
 
     @Transactional(readOnly = true)
-    public List<BookResponse> findAll() {
-        List<Book> books = bookRepository.findAll();
-        return books.stream().map(this::toResponse).toList();
+    public Page<BookResponse> findAll(String title, int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size,
+                Sort.by("publishedYear").descending());
+
+        Page<Book> books = bookRepository.searchByBookTitle(title, pageable);
+        System.out.println("This is total book: " + books.getContent().size());
+        return books.map(this::toResponse);
     }
 
     @Transactional(readOnly = true)
