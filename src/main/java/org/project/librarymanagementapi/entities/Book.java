@@ -14,7 +14,7 @@ public class Book extends BaseEntity{
     private BigDecimal price;
     private int publishedYear;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 

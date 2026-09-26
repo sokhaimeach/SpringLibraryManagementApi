@@ -2,11 +2,13 @@ package org.project.librarymanagementapi.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "members")
 public class Member extends Person {
 
     private String phone;

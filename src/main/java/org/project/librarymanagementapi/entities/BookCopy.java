@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "book_copies")
 public class BookCopy extends BaseEntity {
 
     private String copyNumber;

@@ -1,10 +1,13 @@
 package org.project.librarymanagementapi.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class Person extends BaseEntity {
     private String name;
+
+    @Column(length=150, nullable=false, unique=true)
     private String email;
 
     public String getName() {

@@ -10,6 +10,7 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 
     @Query(value = """
     select b from Book b
+        join fetch b.author
         where lower(b.title) like lower(concat('%', trim(:title), '%'))
     """)
     Page<Book> searchByBookTitle(String title, Pageable pageable);
